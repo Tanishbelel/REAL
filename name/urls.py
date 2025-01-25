@@ -23,6 +23,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from veggie import views
 
 
+
 urlpatterns = [
     path('' , home , name="home"),
     path('delete/<id>/', delete , name = "delete"),
@@ -34,10 +35,11 @@ urlpatterns = [
     path('dashboard/' , dashboard , name="dashboard"),
     path('toggle-favorite/<int:recipe_id>/', views.toggle_favorite, name='toggle_favorite'),
     path('favorites/', views.favorites_view, name='favorites'),
-    path('profile/', profile_view, name='profile'),
+    path('profiles/', profile_view, name='profile'),
     path('buy-token/', buy_token, name='buy_token'),
     path('favorites/view-skill/', views.view_skill, name='view-skill'),
     path('trade/<int:recipe_id>/', views.trade_skill, name='trade_skill'),
+    
 
 
 
