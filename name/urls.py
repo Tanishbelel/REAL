@@ -37,6 +37,7 @@ urlpatterns = [
     path('profile/', profile_view, name='profile'),
     path('buy-token/', buy_token, name='buy_token'),
     path('favorites/view-skill/', views.view_skill, name='view-skill'),
+    path('trade/<int:recipe_id>/', views.trade_skill, name='trade_skill'),
 
 
 

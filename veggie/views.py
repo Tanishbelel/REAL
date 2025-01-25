@@ -461,3 +461,18 @@ def view_skill(request):
     context = {'recipes': queryset}
         
     return render(request , "view_skill.html", context)
+@login_required
+def trade_skill(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    user_skills = Recipe.objects.filter(user=request.user)  # Get user's skills
+
+    if request.method == 'POST':
+        # Handle trade proposal logic here
+        trade_skill_id = request.POST.get('trade_skill')
+        trade_notes = request.POST.get('trade_notes')
+        # Add your trade proposal processing logic
+
+    return render(request, 'trade_skill.html', {
+        'recipe': recipe,
+        'user_skills': user_skills
+    })

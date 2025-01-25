@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Swapora - Trade Skills{% endblock %}
+
+{% block start %}
+<div class="min-h-screen bg-gray-900 text-white">
+    <div class="container mx-auto px-6 py-20">
+        <div class="max-w-4xl mx-auto bg-gray-800 rounded-lg shadow-lg p-8">
+            <h1 class="text-4xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text mb-6">
+                Trade Your Skill: {{ recipe.recipe_name }}
+            </h1>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Skill Details -->
+                <div>
+                    <div class="mb-6">
+                        {% if recipe.recipe_image %}
+                            <img src="/media/{{ recipe.recipe_image }}" alt="{{ recipe.recipe_name }}" class="w-full h-64 object-cover rounded-lg">
+                        {% else %}
+                            <div class="bg-gray-700 h-64 flex items-center justify-center rounded-lg">
+                                <i class="fas fa-exchange-alt fa-3x text-gray-500"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4">Skill Details</h3>
+                        <p class="text-gray-300">{{ recipe.recipe_des }}</p>
+                    </div>
+                </div>
+
+                <!-- Trade Form -->
+                <div>
+                    <form method="POST" class="space-y-6">
+                        {% csrf_token %}
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">What Skill Would You Like to Trade?</label>
+                            <select name="trade_skill" class="w-full bg-gray-700 text-white rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                {% for skill in user_skills %}
+                                    <option value="{{ skill.id }}">{{ skill.recipe_name }}</option>
+                                {% empty %}
+                                    <option>No skills available</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Additional Notes</label>
+                            <textarea name="trade_notes" rows="4" class="w-full bg-gray-700 text-white rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Describe what you're offering..."></textarea>
+                        </div>
+
+                        <div class="flex space-x-4">
+                            <button type="submit" class="flex-1 px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full hover:scale-105 transform transition">
+                                Propose Trade
+                            </button>
+                            <a href="{% url 'recipes' %}" class="flex-1 px-6 py-3 border border-white/30 rounded-full text-white/80 hover:bg-white/10 transition text-center">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
