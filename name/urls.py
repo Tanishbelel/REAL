@@ -36,6 +36,8 @@ urlpatterns = [
     path('favorites/', views.favorites_view, name='favorites'),
     path('profile/', profile_view, name='profile'),
     path('buy-token/', buy_token, name='buy_token'),
+    path('favorites/view-skill/', views.view_skill, name='view-skill'),
+
 
 
 

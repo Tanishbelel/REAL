@@ -9,10 +9,11 @@ from django.contrib.auth.models import User
 
 
 class Recipe(models.Model):
-    user = models.ForeignKey(User , on_delete=models.SET_NULL , null = True , blank = True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     recipe_name = models.CharField(max_length=100)
     recipe_des = models.TextField()
-    recipe_image = models.ImageField(upload_to = "recipes/")
+    recipe_image = models.ImageField(upload_to="recipes/")
+    recipe_main = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 class Favorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

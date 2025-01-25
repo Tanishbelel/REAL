@@ -7,11 +7,53 @@
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
     
     <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+    color: white;
+}
+
+.parallax-bg {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.neon-border {
+    box-shadow:
+        0 0 7px #fff,
+        0 0 10px #ff4da6,
+        0 0 21px #ff4da6,
+        0 0 42px #ff4da6,
+        0 0 82px #ff4da6,
+        0 0 92px #ff4da6,
+        0 0 102px #ff4da6,
+        0 0 151px #ff4da6;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+.floating-element {
+    animation: float 4s ease-in-out infinite;
+}
+
+.footer-bg {
+    background: radial-gradient(circle at top, #24243e, #0f0c29);
+}
+
         /* Custom Styles */
         body {
             min-height: 100vh;
@@ -63,8 +105,54 @@
     </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
+  <!-- Navigation Bar -->
+<nav class="bg-gray-900 py-4 px-8 shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto flex justify-between items-center">
+        <!-- Brand Logo -->
+        <a href="/" class="text-3xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text">
+            Swapora
+        </a>
+
+        <!-- Navigation Links -->
+        <div class="flex items-center space-x-6">
+            <ul class="flex space-x-6 text-white text-lg">
+                <li><a class="hover:text-pink-500 nav-link position-relative" href="/">Home</a></li>
+                <li><a class="hover:text-purple-500 nav-link position-relative" href="/recipes/">Lists</a></li>
+                {% if request.user.is_authenticated %}
+                <li><a class="hover:text-indigo-500 nav-link position-relative" href="/favorites/">My Favorites</a></li>
+                {% endif %}
+            </ul>
+
+            <!-- Auth Buttons/Dropdown -->
+            <ul class="flex space-x-4">
+                {% if request.user.is_authenticated %}
+                <li class="relative">
+                    <div class="dropdown">
+                        <a href="#" class="flex items-center text-white space-x-2 hover:text-purple-500" role="button" data-bs-toggle="dropdown">
+                            <img src="https://ui-avatars.com/api/?name={{ request.user.username }}&background=6a11cb&color=fff" alt="{{ request.user.username }}" class="rounded-full w-8 h-8">
+                            <span>{{ request.user.username }}</span>
+                        </a>
+                        <ul class="dropdown-menu absolute bg-gray-800 text-white right-0 mt-2 rounded-lg shadow-lg overflow-hidden">
+                            <li><a class="dropdown-item block px-4 py-2 hover:bg-gray-700 text-white" href="/add/">Add Post</a></li>
+                            <li><a class="dropdown-item block px-4 py-2 hover:bg-gray-700 text-white" href="/favorites/">My Favorites</a></li>
+                            <li><a class="dropdown-item block px-4 py-2 hover:bg-gray-700 text-white" href="/profiles/">Profile</a></li>
+                            <li><hr class="border-gray-600"></li>
+                            <li><a class="dropdown-item block px-4 py-2 hover:bg-red-600 text-red-500" href="/logout/">Logout</a></li>
+                        </ul>
+                    </div>
+                </li>
+                {% else %}
+                <li><a href="/login/" class="text-white hover:text-pink-500">Login</a></li>
+                <li><a href="/register/" class="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full hover:scale-105 transform transition">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-lg py-3">
+    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-lg py-3">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/">
                 <div class="brand-icon me-2">
@@ -102,8 +190,9 @@
                                 <span>{{ request.user.username }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow-lg">
-                                <li><a class="dropdown-item" href="recipes/">Add Post</a></li>
+                                <li><a class="dropdown-item" href="/add/">Add Post</a></li>
                                 <li><a class="dropdown-item" href="/favorites/">My Favorites</a></li>
+                                <li><a class="dropdown-item" href="/profiles/">Profile</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item text-danger" href="/logout/">Logout</a></li>
                             </ul>
@@ -119,7 +208,7 @@
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav> -->
     
     <style>
         .nav-hover::after {
@@ -165,25 +254,19 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-5 bg-soft-gradient text-center text-md-start">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h5 class="mb-3 text-primary fw-bold">Swapora</h5>
-                    <p class="text-muted small mb-3">Empowering students through skill exchange and collaborative resources</p>
-                    <div class="social-links">
-                        <a href="#" class="text-muted me-3"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="text-muted me-3"><i class="bi bi-twitter"></i></a>
-                        <a href="#" class="text-muted"><i class="bi bi-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-6 text-md-end mt-3 mt-md-0">
-                    <p class="text-muted small mb-2">© 2025 Swapora. All rights reserved</p>
-                    <p class="text-muted small">Bridging skills, building community</p>
-                </div>
-            </div>
+    <footer class="footer-bg py-10">
+        <div class="container mx-auto text-center space-y-6">
+            <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500">Swapora</h2>
+            <p class="text-gray-400">Empowering students to collaborate, grow, and achieve through skill-sharing.</p>
+            <ul class="flex justify-center space-x-6 text-gray-300">
+                <li><a href="#" class="hover:text-pink-500">Privacy Policy</a></li>
+                <li><a href="#" class="hover:text-purple-500">Terms of Service</a></li>
+                <li><a href="#" class="hover:text-indigo-500">Support</a></li>
+            </ul>
+            <p class="text-gray-500 text-sm">&copy; 2025 Swapora. All rights reserved.</p>
         </div>
     </footer>
+    
 
     <!-- Notification Container -->
     <div class="toast-container">

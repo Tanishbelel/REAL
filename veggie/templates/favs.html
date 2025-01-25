@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Swapora{% endblock %}
+{% block title %}My Favorite Recipes - RecipeHub{% endblock %}
 
 {% block start %}
 <div class="container">
@@ -39,7 +39,7 @@
                                     {% endif %}
                                 </td>
                                 <td class="text-end px-4">
-                                    <a href="/update/{{recipe.id}}/" class="btn btn-outline-primary btn-sm me-2">View</a>
+                                    <a href="/update/{{recipe.id}}/" class="btn btn-outline-primary btn-sm me-2">View Recipe</a>
                                     <button class="btn btn-outline-danger btn-sm favs" data-recipe-id="{{recipe.id}}">❤</button>
                                 </td>
                             </tr>

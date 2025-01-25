@@ -3,274 +3,171 @@
 {% block title %}Swapora - Skill Exchange Redefined{% endblock %}
 
 {% block start %}
-<!-- Hero Section with Enhanced Animation -->
-<div class="hero-section position-relative" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); overflow: hidden;">
-    <div class="container py-5 position-relative text-center text-lg-start">
-        <div class="row align-items-center min-vh-75">
-            <div class="col-lg-6 position-relative z-3">
-                <h1 class="display-3 fw-bold text-white mb-4 animate_animated animatefadeInDown animate_slow">Swap Skills, Empower Potential</h1>
-                <p class="lead text-white-50 mb-4 animate_animated animatefadeIn animate_slow" style="animation-delay: 0.5s;">Join a thriving community of students sharing skills, resources, and creativity to grow together. Collaborate, connect, and achieve without limits.</p>
-                {% if not request.user.is_authenticated %}
-                    <div class="d-flex gap-3 animate_animated animatefadeInUp animate_slow" style="animation-delay: 1s;">
-                        <a href="{% url 'login' %}" class="btn btn-primary btn-lg px-5 rounded-pill shadow-lg pulse-animation">Get Started</a>
-                        <a href="{% url 'register' %}" class="btn btn-outline-light btn-lg px-5 rounded-pill pulse-animation">Join Now</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Swapora | Redefine Your Potential</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+
+@keyframes shine {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+.group-hover .absolute {
+    animation: shine 1s ease-in-out;
+}
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+            color: white;
+        }
+
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* .neon-border {
+            box-shadow:
+                0 0 7px #fff,
+                0 0 10px #ff4da6,
+                0 0 21px #ff4da6,
+                0 0 42px #ff4da6,
+                0 0 82px #ff4da6,
+                0 0 92px #ff4da6,
+                0 0 102px #ff4da6,
+                0 0 151px #ff4da6;
+        } */
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating-element {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .footer-bg {
+            background: radial-gradient(circle at top, #24243e, #0f0c29);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Hero Section -->
+    <div class="parallax-bg relative">
+        <div class="absolute inset-0" style="background: radial-gradient(circle at top right, rgba(49,49,128,0.4), transparent 50%);"></div>
+        <div class="container mx-auto px-6 py-20 relative z-10">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <h1 class="text-6xl font-black leading-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
+                        Swap Skills, Empower Potential
+                    </h1>
+                    <p class="text-xl text-gray-300">
+                        Join a thriving community of students sharing skills, resources, and creativity to grow together.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="{% url 'login' %}" class="px-10 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full text-white font-bold hover:scale-105 transform transition">
+                            Get Started
+                        </a>
+                        <a href="{% url 'register' %}" class="px-10 py-4 border border-white/30 rounded-full text-white/80 hover:bg-white/10 transition">
+                            Explore Skills
+                        </a>
                     </div>
-                {% else %}
-                    <a href="{% url 'recipes' %}" class="btn btn-primary btn-lg px-5 rounded-pill animate_animated animatefadeInUp animate_slow" style="animation-delay: 1s;">Share Your Skills</a>
-                {% endif %}
-            </div>
-            <div class="col-lg-6 text-center d-none d-lg-block position-relative">
-                <div class="hero-image-wrapper">
-                    <img src="https://document360.com/wp-content/uploads/2022/11/knowledge_transfer.jpg" alt="Skill Exchange" class="img-fluid hero-image animate_animated animatezoomIn animate_slow floating-animation rounded-circle">
                 </div>
-            </div>
-            <div class="hero-shapes">
-                <div class="shape shape-1"></div>
-                <div class="shape shape-2"></div>
-                <div class="shape shape-3"></div>
+                <div class="relative group">
+                    <div class="relative font-black leading-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 z-10 rounded-3xl floating-element text-6xl text-center group transition-transform duration-300 overflow-hidden">
+                        <span class="relative z-10">REAL</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-white via-white to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-shine"></div>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
-</div>
 
-<!-- Featured Exchanges Section -->
-<section class="py-5 bg-light position-relative overflow-hidden featured-exchanges">
-    <div class="container position-relative z-3">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold animate_animated animate_fadeInLeft">Explore Recent Exchanges</h2>
-            <a href="{% url 'recipes' %}" class="btn btn-outline-primary animate_animated animate_fadeInRight">View All</a>
-        </div>
-        <div class="row g-4 exchange-grid">
-            {% for recipe in featured_recipes %}
-            <div class="col-md-6 col-lg-4">
-                <div class="card exchange-card h-100 shadow-lg border-0 position-relative overflow-hidden animate_animated animate_zoomIn">
-                    <div class="card-overlay"></div>
-                    <div class="exchange-badge position-absolute top-0 end-0 m-3">
-                        <span class="badge bg-primary">Popular</span>
-                    </div>
-                    
+    <section class="py-10 bg-gray-900 text-white">
+        <div class="container mx-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text">Explore Recent Exchanges</h2>
+                <a href="{% url 'recipes' %}" class="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full hover:scale-105 transform transition">View All</a>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for recipe in featured_recipes %}
+                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition hover:scale-105">
                     {% if recipe.recipe_image %}
-                        <div class="card-img-container">
-                            <img src="/media/{{recipe.recipe_image}}" class="card-img-top" style="height: 250px; object-fit: cover;" alt="{{recipe.recipe_name}}">
-                        </div>
+                        <img src="/media/{{recipe.recipe_image}}" alt="{{recipe.recipe_name}}" class="w-full h-48 object-cover">
                     {% else %}
-                        <div class="bg-gradient text-center py-5 text-white d-flex align-items-center justify-content-center">
-                            <i class="fas fa-exchange-alt fa-4x opacity-75"></i>
+                        <div class="bg-gray-700 h-48 flex items-center justify-center">
+                            <i class="fas fa-exchange-alt fa-3x text-gray-500"></i>
                         </div>
                     {% endif %}
-                    
-                    <div class="card-body position-relative z-3">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h5 class="card-title fw-bold mb-0">{{recipe.recipe_name}}</h5>
-                            <button class="btn btn-outline-danger btn-sm favs" data-recipe-id="{{recipe.id}}">
-                                {% if recipe in user_favorites %}❤{% else %}♡{% endif %}
-                            </button>
-                        </div>
-                        <p class="text-muted small mb-3">{{recipe.recipe_des|truncatechars:100}}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="user-info d-flex align-items-center">
-                                <img src="https://ui-avatars.com/api/?name={{recipe.user.username}}&background=random&color=fff" 
-                                     class="rounded-circle me-2" style="width: 32px; height: 32px;">
-                                <small class="text-muted">{{recipe.user.username}}</small>
+                    <div class="p-6">
+                        <h5 class="text-xl font-bold text-white mb-2">{{ recipe.recipe_name }}</h5>
+                        <p class="text-sm text-gray-400 mb-4">{{ recipe.recipe_des|truncatechars:100 }}</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://ui-avatars.com/api/?name={{ recipe.user.username }}&background=random&color=fff" class="w-10 h-10 rounded-full">
+                                <span class="text-sm">{{ recipe.user.username }}</span>
                             </div>
-                            <a href="#" class="btn btn-sm btn-outline-primary">Explore</a>
+                            <a href="#" class="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-full text-sm hover:scale-105 transform transition">Explore</a>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
-    </div>
-    <div class="section-overlay"></div>
-</section>
+        <div class="my-10 border-t border-gray-700"></div>
+    </section>
+    
 
-<!-- Skill Categories Section -->
-<section class="py-5 position-relative">
-    <div class="container text-center position-relative z-3">
-        <h2 class="fw-bold mb-4 animate_animated animate_fadeInDown">Discover Skill Categories</h2>
-        <div class="row g-4">
-            {% for category in categories %}
-            <div class="col-6 col-md-4 col-lg-3">
-                <a href="{% url 'category' category.slug %}" class="text-decoration-none">
-                    <div class="card h-100 border-0 shadow-sm text-center category-card animate_animated animate_fadeInUp">
-                        <div class="card-body">
-                            <img src="/media/{{category.icon}}" alt="{{category.name}}" class="mb-3 category-icon" style="width: 64px; height: 64px;">
-                            <h5 class="card-title text-dark">{{category.name}}</h5>
-                        </div>
+    
+
+    <section class="py-10 bg-gray-900 text-white">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text mb-8">Discover Skill Categories</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                {% for category in categories %}
+                <a href="{% url 'category' category.slug %}" class="block group transform transition hover:scale-105">
+                    <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+                        <img src="/media/{{ category.icon }}" alt="{{ category.name }}" class="mx-auto w-16 h-16 mb-4">
+                        <h5 class="text-lg font-medium text-white group-hover:text-pink-500">{{ category.name }}</h5>
                     </div>
                 </a>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
-    </div>
-    <div class="category-overlay"></div>
-</section>
-
-<!-- Join Community Section -->
-<section class="bg-primary text-white py-5 position-relative overflow-hidden">
-    <div class="container text-center position-relative z-3">
-        <h2 class="fw-bold mb-4 animate_animated animatepulse animate_repeat-2">Build Your Network</h2>
-        <p class="lead mb-4 animate_animated animate_fadeIn">Connect with fellow students, share your unique skills, and grow together as a community.</p>
-        {% if not request.user.is_authenticated %}
-            <a href="{% url 'register' %}" class="btn btn-light btn-lg px-5 rounded-pill join-btn animate_animated animate_rubberBand">Join Now</a>
-        {% endif %}
-    </div>
-    <div class="community-shapes">
-        <div class="shape shape-4"></div>
-        <div class="shape shape-5"></div>
-    </div>
-</section>
-
-<style>
+        <div class="my-10 border-t border-gray-700"></div>
+    </section>
     
-    /* Enhanced Animations and Background Effects */
-    :root {
-        --primary-gradient: linear-gradient(45deg, #6a11cb, #2575fc);
-        --secondary-gradient: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
-    }
+    
 
-    body {
-        overflow-x: hidden;
-    }
+    <section class="py-10 bg-gray-900 text-white text-center">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text mb-6">Build Your Network</h2>
+            <p class="text-lg text-gray-300 mb-6">Connect with fellow students, share your unique skills, and grow together as a community.</p>
+            {% if not request.user.is_authenticated %}
+            <a href="{% url 'register' %}" class="px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full text-lg hover:scale-105 transform transition">Join Now</a>
+            {% endif %}
+        </div>
+        <!-- Divider -->
+        <div class="my-10 border-t border-gray-700"></div>
+    </section>
+    
+    
 
-    /* Hero Section Improvements */
-    .hero-section {
-        position: relative;
-        clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
-    }
 
-    .hero-image-wrapper {
-        perspective: 1000px;
-    }
-
-    .hero-image {
-        transition: all 0.5s ease;
-        transform-style: preserve-3d;
-    }
-
-    .hero-image:hover {
-        transform: scale(1.05) rotateY(10deg);
-    }
-
-    /* Floating and Pulse Animations */
-    @keyframes floating {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-20px); }
-        100% { transform: translateY(0px); }
-    }
-
-    .floating-animation {
-        animation: floating 4s ease-in-out infinite;
-    }
-
-    @keyframes pulse-effect {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
-    }
-
-    .pulse-animation {
-        animation: pulse-effect 2s infinite;
-    }
-
-    /* Background Shapes */
-    .hero-shapes .shape {
-        position: absolute;
-        background: rgba(255,255,255,0.1);
-        border-radius: 50%;
-    }
-
-    .hero-shapes .shape-1 {
-        top: 10%;
-        left: 5%;
-        width: 200px;
-        height: 200px;
-        animation: move-shape-1 10s infinite alternate;
-    }
-
-    .hero-shapes .shape-2 {
-        top: 60%;
-        right: 10%;
-        width: 150px;
-        height: 150px;
-        animation: move-shape-2 8s infinite alternate;
-    }
-
-    .hero-shapes .shape-3 {
-        bottom: -50px;
-        left: 50%;
-        width: 300px;
-        height: 300px;
-        background: rgba(255,255,255,0.05);
-    }
-
-    @keyframes move-shape-1 {
-        to { transform: translateY(50px) rotate(45deg); }
-    }
-
-    @keyframes move-shape-2 {
-        to { transform: translateX(-50px) rotate(-45deg); }
-    }
-
-    /* Card and Category Enhancements */
-    .recipe-card, .category-card {
-        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    }
-
-    .recipe-card:hover, .category-card:hover {
-        transform: translateY(-10px) scale(1.03);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-    }
-
-    .category-icon {
-        transition: transform 0.3s ease;
-    }
-
-    .category-card:hover .category-icon {
-        transform: rotate(360deg) scale(1.2);
-    }
-
-    /* Section Overlays */
-    .section-overlay, .category-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255,255,255,0.05);
-        z-index: 1;
-    }
-
-    /* Community Section Shapes */
-    .community-shapes .shape {
-        position: absolute;
-        background: rgba(255,255,255,0.05);
-        border-radius: 50%;
-    }
-
-    .community-shapes .shape-4 {
-        top: -50px;
-        right: 10%;
-        width: 200px;
-        height: 200px;
-    }
-
-    .community-shapes .shape-5 {
-        bottom: -50px;
-        left: 10%;
-        width: 150px;
-        height: 150px;
-    }
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const favsButtons = document.querySelectorAll('.favs');
-    favsButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            this.innerHTML = this.innerHTML === '♡' ? '❤' : '♡';
-        });
-    });
-});
-</script>
 {% endblock %}

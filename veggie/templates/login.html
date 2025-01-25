@@ -2,10 +2,11 @@
 {% block start %}
 
 <div class="container mt-5">
-    <div class="row justify-content-center">
+    <div class="row class="absolute inset-0" style="background: radial-gradient(circle at top right, rgba(49,49,128,0.4), transparent 50%); justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-lg border-0">
-                <div class="card-body p-5">
+                <div class="card-body p-5 ">
+
                     <!-- Logo or Brand Name -->
                     <div class="text-center mb-4">
                         <h4 class="fw-bold">Welcome Back</h4>
@@ -22,7 +23,8 @@
                         {% endfor %}
                     {% endif %}
 
-                   
+                    
+
                     <!-- Login Form -->
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -69,7 +71,7 @@
 
             <!-- Additional Information -->
             <div class="text-center mt-4">
-                <p class="text-muted small mb-0">
+                <p class="text-white small mb-0">
                     By continuing, you agree to our 
                     <a href="#" class="text-decoration-none">Terms of Service</a> and 
                     <a href="#" class="text-decoration-none">Privacy Policy</a>
@@ -84,7 +86,10 @@
     .card {
         border-radius: 15px;
     }
-    
+    .bg-custom {
+        background-color: #11827;
+      }
+      
     .form-control, .input-group-text, .btn {
         padding: 0.75rem 1rem;
     }
