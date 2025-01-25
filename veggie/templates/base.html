@@ -64,10 +64,13 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-lg py-3">
         <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="bi bi-book-half me-2"></i>Swapora
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <div class="brand-icon me-2">
+                    <i class="bi bi-book-half" style="font-size: 1.5rem; background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                </div>
+                <span class="fw-bold" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Swapora</span>
             </a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -77,14 +80,14 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link position-relative nav-hover" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/recipes/">Lists</a>
+                        <a class="nav-link position-relative nav-hover" href="/recipes/">Lists</a>
                     </li>
                     {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="/favorites/">My Favorites</a>
+                        <a class="nav-link position-relative nav-hover" href="/favorites/">My Favorites</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -92,13 +95,15 @@
                 <ul class="navbar-nav">
                     {% if request.user.is_authenticated %}
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-person-circle me-1"></i>{{ request.user.username }}
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                                <div class="user-avatar me-2">
+                                    <img src="https://ui-avatars.com/api/?name={{ request.user.username }}&background=6a11cb&color=fff" alt="{{ request.user.username }}" class="rounded-circle" style="width: 32px; height: 32px;">
+                                </div>
+                                <span>{{ request.user.username }}</span>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="/add/">Add Post</a></li>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-lg">
+                                <li><a class="dropdown-item" href="recipes/">Add Post</a></li>
                                 <li><a class="dropdown-item" href="/favorites/">My Favorites</a></li>
-                                <li><a class="dropdown-item" href="/profile/">Profile</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item text-danger" href="/logout/">Logout</a></li>
                             </ul>
@@ -108,29 +113,73 @@
                             <a class="nav-link" href="/login/">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-primary ms-2" href="/register/">Sign Up</a>
+                            <a class="btn btn-primary ms-2 rounded-pill" href="/register/">Sign Up</a>
                         </li>
                     {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
-
+    
+    <style>
+        .nav-hover::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+    
+        .nav-hover:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+    
+        .navbar {
+            transition: all 0.3s ease;
+        }
+    
+        .navbar-nav .nav-link {
+            transition: color 0.3s ease;
+        }
+    
+        .btn-primary {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border: none;
+            transition: transform 0.3s ease;
+        }
+    
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(106, 17, 203, 0.2);
+        }
+    </style>
     <!-- Main Content -->
     <main>
         {% block start %}{% endblock %}
     </main>
 
     <!-- Footer -->
-    <footer class="py-4 mt-5">
+    <footer class="py-5 bg-soft-gradient text-center text-md-start">
         <div class="container">
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h5 class="mb-3">Swapora</h5>
-                    <p class="text-muted mb-0">Share and discover amazing recipes from around the world.</p>
+                    <h5 class="mb-3 text-primary fw-bold">Swapora</h5>
+                    <p class="text-muted small mb-3">Empowering students through skill exchange and collaborative resources</p>
+                    <div class="social-links">
+                        <a href="#" class="text-muted me-3"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-muted me-3"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-muted"><i class="bi bi-linkedin"></i></a>
+                    </div>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="mb-0 text-muted">&copy; 2025 Swapora. All rights reserved - Team REAL</p>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <p class="text-muted small mb-2">© 2025 Swapora. All rights reserved</p>
+                    <p class="text-muted small">Bridging skills, building community</p>
                 </div>
             </div>
         </div>
