@@ -34,6 +34,7 @@ urlpatterns = [
     path('dashboard/' , dashboard , name="dashboard"),
    path('toggle-favorite/<int:recipe_id>/', views.toggle_favorite, name='toggle_favorite'),
     path('favorites/', views.favorites_view, name='favorites'),
+    path('profile/', profile_view, name='profile'),
 
 
 

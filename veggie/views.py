@@ -43,8 +43,15 @@ def delete(request,id):
     queryset.delete()
     return redirect('/recipes/')
 
-def update(request,id):
+@login_required(login_url='/login/')
+def update(request, id):
     queryset = Recipe.objects.get(id=id)
+    
+    # Check if the current user is the creator of the recipe
+    if request.user != queryset.user:
+        messages.error(request, "You are not authorized to modify this recipe.")
+        return redirect('/recipes/')
+
     if request.method == "POST":
        data = request.POST
        recipe_name = data.get('recipe_name')
@@ -56,12 +63,12 @@ def update(request,id):
 
        if recipe_image:
            queryset.recipe_image = recipe_image
-           queryset.save()
-           return redirect('/recipes/')
-
+       
+       queryset.save()
+       return redirect('/recipes/')
 
     context = {'recipes': queryset}
-    return render(request , "update.html", context)
+    return render(request, "update.html", context)
 
 
 def login_page(request):
@@ -188,3 +195,21 @@ def home(request):
     }
     
     return render(request, 'index.html', context)
+
+@login_required
+def profile_view(request):
+    if request.method == 'POST':
+        if 'add_token' in request.POST:
+            # Logic to add 10 tokens
+            message = "10 tokens added successfully!"
+        elif 'use_token' in request.POST:
+            # Logic to use 1 token for trading
+            message = "1 token used for trading!"
+    else:
+        message = None
+
+    context = {
+        'user': request.user,
+        'message': message
+    }
+    return render(request, 'profile.html', context)

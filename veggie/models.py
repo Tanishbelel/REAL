@@ -23,4 +23,6 @@ class Category(models.Model):
     slug = models.SlugField(unique=True)
     icon = models.ImageField(upload_to='category_icons/')
         
-    
+class Token(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    balance = models.IntegerField(default=0)
