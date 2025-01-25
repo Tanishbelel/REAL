@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now
 from django.utils import timezone
 
+import json
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -27,5 +29,4 @@ class Category(models.Model):
 class Token(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     balance = models.IntegerField(default=0)
-
 

@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid chat-container">
+    <div class="row h-100">
+        <!-- Chat Users Sidebar -->
+        <div class="col-md-4 col-lg-3 bg-light border-end chat-sidebar">
+            <div class="p-3">
+                <h4 class="mb-4">Chats</h4>
+                <div class="chat-list">
+                    {% for chat_user in chat_users %}
+                    <a href="{% url 'chat_detail' chat_user.id %}" 
+                       class="chat-user-item list-group-item list-group-item-action d-flex align-items-center 
+                       {% if chat_user.id == chat_partner.id %}active{% endif %}">
+                        <img src="{{ chat_user.profile.avatar.url|default:'/static/default_avatar.png' }}" 
+                             class="rounded-circle me-3" 
+                             style="width: 50px; height: 50px; object-fit: cover;" 
+                             alt="{{ chat_user.username }} avatar">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1">{{ chat_user.username }}</h6>
+                            <small class="text-muted">
+                                {{ chat_user.last_message|truncatechars:30 }}
+                            </small>
+                        </div>
+                        {% if chat_user.unread_count %}
+                        <span class="badge bg-primary ms-auto">
+                            {{ chat_user.unread_count }}
+                        </span>
+                        {% endif %}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chat Window -->
+        <div class="col-md-8 col-lg-9 d-flex flex-column chat-window">
+            <!-- Chat Header -->
+            <div class="chat-header bg-white border-bottom p-3 d-flex align-items-center">
+                <img src="{{ chat_partner.profile.avatar.url|default:'/static/default_avatar.png' }}" 
+                     class="rounded-circle me-3" 
+                     style="width: 50px; height: 50px; object-fit: cover;" 
+                     alt="{{ chat_partner.username }} avatar">
+                <div>
+                    <h5 class="mb-0">{{ chat_partner.username }}</h5>
+                    <small class="text-muted">
+                        {% if chat_partner.is_online %}
+                        Online
+                        {% else %}
+                        Offline
+                        {% endif %}
+                    </small>
+                </div>
+            </div>
+
+            <!-- Messages Container -->
+            <div id="chat-messages" class="flex-grow-1 p-4 overflow-auto">
+                {% for message in messages %}
+                    <div class="message {% if message.sender == request.user %}message-sent{% else %}message-received{% endif %} mb-3">
+                        <div class="message-content p-2 rounded 
+                            {% if message.sender == request.user %}bg-primary text-white{% else %}bg-light{% endif %}">
+                            {{ message.content }}
+                            <small class="d-block text-end mt-1 
+                                {% if message.sender == request.user %}text-white-50{% else %}text-muted{% endif %}">
+                                {{ message.timestamp|date:"H:i" }}
+                            </small>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Message Input -->
+            <div class="chat-input border-top p-3">
+                <form id="message-form" class="d-flex">
+                    {% csrf_token %}
+                    <input type="text" 
+                           id="message-input" 
+                           class="form-control me-2" 
+                           placeholder="Type your message..." 
+                           required>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-send"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.chat-container {
+    height: calc(100vh - 56px);
+}
+
+.chat-sidebar {
+    overflow-y: auto;
+}
+
+.chat-window {
+    max-height: 100vh;
+}
+
+.chat-user-item {
+    transition: background-color 0.2s;
+}
+
+.chat-user-item:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+.chat-user-item.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.message {
+    max-width: 70%;
+    clear: both;
+}
+
+.message-sent {
+    float: right;
+    text-align: right;
+}
+
+.message-received {
+    float: left;
+    text-align: left;
+}
+
+#chat-messages {
+    scroll-behavior: smooth;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const chatMessages = document.getElementById('chat-messages');
+    const messageForm = document.getElementById('message-form');
+    const messageInput = document.getElementById('message-input');
+
+    // Scroll to bottom on page load
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    messageForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const message = messageInput.value.trim();
+
+        if (message) {
+            fetch("{% url 'send_message' chat_partner.id %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Append message to chat
+                    const messageDiv = document.createElement('div');
+                    messageDiv.classList.add('message', 'message-sent', 'mb-3');
+                    messageDiv.innerHTML = `
+                        <div class="message-content p-2 rounded bg-primary text-white">
+                            ${message}
+                            <small class="d-block text-end mt-1 text-white-50">
+                                ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                            </small>
+                        </div>
+                    `;
+                    chatMessages.appendChild(messageDiv);
+                    
+                    // Reset input and scroll
+                    messageInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    });
+});
+</script>
+{% endblock %}

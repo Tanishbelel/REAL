@@ -51,7 +51,7 @@ def update(request, id):
     
     # Check if the current user is the creator of the recipe
     if request.user != queryset.user:
-        messages.error(request, "You are not authorized to modify this recipe.")
+        messages.error(request, "You are not authorized to modify this.")
         return redirect('/recipes/')
 
     if request.method == "POST":
@@ -215,3 +215,4 @@ def profile_view(request):
         'message': message
     }
     return render(request, 'profile.html', context)
+
