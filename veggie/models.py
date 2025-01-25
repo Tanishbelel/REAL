@@ -13,7 +13,7 @@ class Recipe(models.Model):
     recipe_name = models.CharField(max_length=100)
     recipe_des = models.TextField()
     recipe_image = models.ImageField(upload_to="recipes/")
-    recipe_main = models.TextField()
+    recipe_main = models.CharField(max_length=100, null=False, default='')    
     created_at = models.DateTimeField(auto_now_add=True)
 class Favorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
