@@ -1,84 +1,101 @@
 {% extends 'base.html' %}
 
-{% block title %}Welcome to Swapora - Share & Discover Skills{% endblock %}
+{% block title %}Swapora - Skill Exchange Redefined{% endblock %}
 
 {% block start %}
-<!-- Hero Section -->
-<div class="hero-section position-relative mb-5">
-    <div class="container py-5">
-        <div class="row align-items-center min-vh-75">  
-            <div class="col-lg-6">
-                <h1 class="display-4 fw-bold mb-4">Discover & Share Your Favorite Recipes</h1>
-                <p class="lead text-muted mb-4">Join our community of food lovers to discover, share, and save delicious recipes from around the world.</p>
+<!-- Hero Section with Enhanced Animation -->
+<div class="hero-section position-relative" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); overflow: hidden;">
+    <div class="container py-5 position-relative text-center text-lg-start">
+        <div class="row align-items-center min-vh-75">
+            <div class="col-lg-6 position-relative z-3">
+                <h1 class="display-3 fw-bold text-white mb-4 animate_animated animatefadeInDown animate_slow">Swap Skills, Empower Potential</h1>
+                <p class="lead text-white-50 mb-4 animate_animated animatefadeIn animate_slow" style="animation-delay: 0.5s;">Join a thriving community of students sharing skills, resources, and creativity to grow together. Collaborate, connect, and achieve without limits.</p>
                 {% if not request.user.is_authenticated %}
-                    <div class="d-flex gap-3">
-                        <a href="{% url 'login' %}" class="btn btn-primary btn-lg px-4">Get Started</a>
-                        <a href="{% url 'register' %}" class="btn btn-outline-primary btn-lg px-4">Sign Up</a>
+                    <div class="d-flex gap-3 animate_animated animatefadeInUp animate_slow" style="animation-delay: 1s;">
+                        <a href="{% url 'login' %}" class="btn btn-primary btn-lg px-5 rounded-pill shadow-lg pulse-animation">Get Started</a>
+                        <a href="{% url 'register' %}" class="btn btn-outline-light btn-lg px-5 rounded-pill pulse-animation">Join Now</a>
                     </div>
                 {% else %}
-                    <a href="{% url 'recipes' %}" class="btn btn-primary btn-lg px-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-2" viewBox="0 0 16 16">
-                            <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
-                        </svg>
-                        Share Your Skills/Items
-                    </a>
+                    <a href="{% url 'recipes' %}" class="btn btn-primary btn-lg px-5 rounded-pill animate_animated animatefadeInUp animate_slow" style="animation-delay: 1s;">Share Your Skills</a>
                 {% endif %}
             </div>
-            <div class="col-lg-6 d-none d-lg-block">
-               
+            <div class="col-lg-6 text-center d-none d-lg-block position-relative">
+                <div class="hero-image-wrapper">
+                    <img src="https://document360.com/wp-content/uploads/2022/11/knowledge_transfer.jpg" alt="Skill Exchange" class="img-fluid hero-image animate_animated animatezoomIn animate_slow floating-animation rounded-circle">
+                </div>
+            </div>
+            <div class="hero-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Featured Recipes Section -->
-<div class="container mb-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold mb-0">Featured</h2>
-        <a href="{% url 'recipes' %}" class="btn btn-outline-primary">View All Post</a>
-    </div>
-    
-    <div class="row g-4">
-        {% for recipe in featured_recipes %}
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-0 shadow-sm">
-                {% if recipe.recipe_image %}
-                    <img src="/media/{{recipe.recipe_image}}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{recipe.recipe_name}}">
-                {% else %}
-                    <div class="bg-light text-center py-5">
-                            <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                            <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
-                        </svg>
+<!-- Featured Exchanges Section -->
+<section class="py-5 bg-light position-relative overflow-hidden featured-exchanges">
+    <div class="container position-relative z-3">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold animate_animated animate_fadeInLeft">Explore Recent Exchanges</h2>
+            <a href="{% url 'recipes' %}" class="btn btn-outline-primary animate_animated animate_fadeInRight">View All</a>
+        </div>
+        <div class="row g-4 exchange-grid">
+            {% for recipe in featured_recipes %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card exchange-card h-100 shadow-lg border-0 position-relative overflow-hidden animate_animated animate_zoomIn">
+                    <div class="card-overlay"></div>
+                    <div class="exchange-badge position-absolute top-0 end-0 m-3">
+                        <span class="badge bg-primary">Popular</span>
                     </div>
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title fw-bold mb-2">{{recipe.recipe_name}}</h5>
-                    <p class="card-text text-muted">{{recipe.recipe_des|truncatechars:100}}</p>
-                </div>
-                <div class="card-footer bg-white border-top-0 d-flex justify-content-between align-items-center">
-                    <small class="text-muted">By {{recipe.user.username}}</small>
-                    <button class="btn btn-outline-danger btn-sm favs" data-recipe-id="{{recipe.id}}">
-                        {% if recipe in user_favorites %}❤️{% else %}♡{% endif %}
-                    </button>
+                    
+                    {% if recipe.recipe_image %}
+                        <div class="card-img-container">
+                            <img src="/media/{{recipe.recipe_image}}" class="card-img-top" style="height: 250px; object-fit: cover;" alt="{{recipe.recipe_name}}">
+                        </div>
+                    {% else %}
+                        <div class="bg-gradient text-center py-5 text-white d-flex align-items-center justify-content-center">
+                            <i class="fas fa-exchange-alt fa-4x opacity-75"></i>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="card-body position-relative z-3">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title fw-bold mb-0">{{recipe.recipe_name}}</h5>
+                            <button class="btn btn-outline-danger btn-sm favs" data-recipe-id="{{recipe.id}}">
+                                {% if recipe in user_favorites %}❤{% else %}♡{% endif %}
+                            </button>
+                        </div>
+                        <p class="text-muted small mb-3">{{recipe.recipe_des|truncatechars:100}}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="user-info d-flex align-items-center">
+                                <img src="https://ui-avatars.com/api/?name={{recipe.user.username}}&background=random&color=fff" 
+                                     class="rounded-circle me-2" style="width: 32px; height: 32px;">
+                                <small class="text-muted">{{recipe.user.username}}</small>
+                            </div>
+                            <a href="#" class="btn btn-sm btn-outline-primary">Explore</a>
+                        </div>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
+    <div class="section-overlay"></div>
+</section>
 
-<!-- Categories Section -->
-<div class="bg-light py-5 mb-5">
-    <div class="container">
-        <h2 class="fw-bold text-center mb-4">Browse by Category</h2>
-        <div class="row g-4 justify-content-center">
+<!-- Skill Categories Section -->
+<section class="py-5 position-relative">
+    <div class="container text-center position-relative z-3">
+        <h2 class="fw-bold mb-4 animate_animated animate_fadeInDown">Discover Skill Categories</h2>
+        <div class="row g-4">
             {% for category in categories %}
             <div class="col-6 col-md-4 col-lg-3">
                 <a href="{% url 'category' category.slug %}" class="text-decoration-none">
-                    <div class="card h-100 border-0 shadow-sm category-card">
-                        <div class="card-body text-center">
-                            <img src="/media/{{category.icon}}" alt="{{category.name}}" class="mb-3" style="width: 48px; height: 48px;">
-                            <h5 class="card-title mb-0">{{category.name}}</h5>
+                    <div class="card h-100 border-0 shadow-sm text-center category-card animate_animated animate_fadeInUp">
+                        <div class="card-body">
+                            <img src="/media/{{category.icon}}" alt="{{category.name}}" class="mb-3 category-icon" style="width: 64px; height: 64px;">
+                            <h5 class="card-title text-dark">{{category.name}}</h5>
                         </div>
                     </div>
                 </a>
@@ -86,122 +103,174 @@
             {% endfor %}
         </div>
     </div>
-</div>
+    <div class="category-overlay"></div>
+</section>
 
 <!-- Join Community Section -->
-<div class="container mb-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-            <h2 class="fw-bold mb-4">Join Our Community</h2>
-            <p class="lead text-muted mb-4">Connect with fellow food lovers, share your culinary creations, and discover new recipes every day.</p>
-            {% if not request.user.is_authenticated %}
-                <a href="{% url 'register' %}" class="btn btn-primary btn-lg px-4">Sign Up Now</a>
-            {% endif %}
-        </div>
+<section class="bg-primary text-white py-5 position-relative overflow-hidden">
+    <div class="container text-center position-relative z-3">
+        <h2 class="fw-bold mb-4 animate_animated animatepulse animate_repeat-2">Build Your Network</h2>
+        <p class="lead mb-4 animate_animated animate_fadeIn">Connect with fellow students, share your unique skills, and grow together as a community.</p>
+        {% if not request.user.is_authenticated %}
+            <a href="{% url 'register' %}" class="btn btn-light btn-lg px-5 rounded-pill join-btn animate_animated animate_rubberBand">Join Now</a>
+        {% endif %}
     </div>
-</div>
+    <div class="community-shapes">
+        <div class="shape shape-4"></div>
+        <div class="shape shape-5"></div>
+    </div>
+</section>
 
 <style>
-    /* Hero Section */
+    
+    /* Enhanced Animations and Background Effects */
+    :root {
+        --primary-gradient: linear-gradient(45deg, #6a11cb, #2575fc);
+        --secondary-gradient: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+    /* Hero Section Improvements */
     .hero-section {
-        background-color: #f8f9fa;
+        position: relative;
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
     }
-    
-    /* Card Styling */
-    .card {
-        border-radius: 15px;
-        transition: transform 0.2s;
+
+    .hero-image-wrapper {
+        perspective: 1000px;
     }
-    
-    .card:hover {
-        transform: translateY(-5px);
+
+    .hero-image {
+        transition: all 0.5s ease;
+        transform-style: preserve-3d;
     }
-    
-    .category-card:hover {
-        background-color: #f8f9fa;
+
+    .hero-image:hover {
+        transform: scale(1.05) rotateY(10deg);
     }
-    
-    /* Button Styling */
-    .btn-primary {
-        background-color: #0d6efd;
-        border: none;
-        transition: all 0.2s;
+
+    /* Floating and Pulse Animations */
+    @keyframes floating {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
     }
-    
-    .btn-primary:hover {
-        background-color: #0b5ed7;
-        transform: translateY(-1px);
+
+    .floating-animation {
+        animation: floating 4s ease-in-out infinite;
     }
-    
-    .btn-outline-primary {
-        border-width: 2px;
-        transition: all 0.2s;
+
+    @keyframes pulse-effect {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
     }
-    
-    .btn-outline-primary:hover {
-        transform: translateY(-1px);
+
+    .pulse-animation {
+        animation: pulse-effect 2s infinite;
     }
-    
-    /* Favorite Button */
-    .btn-outline-danger.favs {
-        transition: all 0.2s;
+
+    /* Background Shapes */
+    .hero-shapes .shape {
+        position: absolute;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
     }
-    
-    .btn-outline-danger.favs:hover {
-        transform: scale(1.1);
+
+    .hero-shapes .shape-1 {
+        top: 10%;
+        left: 5%;
+        width: 200px;
+        height: 200px;
+        animation: move-shape-1 10s infinite alternate;
     }
-    
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-        .display-4 {
-            font-size: 2.5rem;
-        }
-        
-        .lead {
-            font-size: 1.1rem;
-        }
+
+    .hero-shapes .shape-2 {
+        top: 60%;
+        right: 10%;
+        width: 150px;
+        height: 150px;
+        animation: move-shape-2 8s infinite alternate;
+    }
+
+    .hero-shapes .shape-3 {
+        bottom: -50px;
+        left: 50%;
+        width: 300px;
+        height: 300px;
+        background: rgba(255,255,255,0.05);
+    }
+
+    @keyframes move-shape-1 {
+        to { transform: translateY(50px) rotate(45deg); }
+    }
+
+    @keyframes move-shape-2 {
+        to { transform: translateX(-50px) rotate(-45deg); }
+    }
+
+    /* Card and Category Enhancements */
+    .recipe-card, .category-card {
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .recipe-card:hover, .category-card:hover {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .category-icon {
+        transition: transform 0.3s ease;
+    }
+
+    .category-card:hover .category-icon {
+        transform: rotate(360deg) scale(1.2);
+    }
+
+    /* Section Overlays */
+    .section-overlay, .category-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255,255,255,0.05);
+        z-index: 1;
+    }
+
+    /* Community Section Shapes */
+    .community-shapes .shape {
+        position: absolute;
+        background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+    }
+
+    .community-shapes .shape-4 {
+        top: -50px;
+        right: 10%;
+        width: 200px;
+        height: 200px;
+    }
+
+    .community-shapes .shape-5 {
+        bottom: -50px;
+        left: 10%;
+        width: 150px;
+        height: 150px;
     }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const favButtons = document.querySelectorAll('.favs');
-    
-    favButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const recipeId = this.dataset.recipeId;
-            
-            fetch(`/toggle-favorite/${recipeId}/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken'),
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    this.innerHTML = data.is_favorite ? '❤️' : '♡';
-                }
-            })
-            .catch(error => console.error('Error:', error));
+    const favsButtons = document.querySelectorAll('.favs');
+    favsButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            this.innerHTML = this.innerHTML === '♡' ? '❤' : '♡';
         });
     });
-    
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
 });
 </script>
 {% endblock %}

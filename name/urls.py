@@ -35,6 +35,8 @@ urlpatterns = [
     path('toggle-favorite/<int:recipe_id>/', views.toggle_favorite, name='toggle_favorite'),
     path('favorites/', views.favorites_view, name='favorites'),
     path('profile/', profile_view, name='profile'),
+    path('buy-token/', buy_token, name='buy_token'),
+
 
 
 

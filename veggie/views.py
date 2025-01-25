@@ -216,3 +216,6 @@ def profile_view(request):
     }
     return render(request, 'profile.html', context)
 
+@login_required
+def buy_token(request):
+    return render(request,"buytoken.html")

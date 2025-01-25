@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+
+{% block title %}Buy Tokens - Swapora{% endblock %}
+
+{% block start %}
+<div class="container token-purchase-page py-5">
+    <h1 class="text-center mb-5">Purchase Tokens</h1>
+
+    <div class="row g-4">
+        <!-- Predefined Packages -->
+        <div class="col-md-4">
+            <div class="card h-100 border-primary">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Starter Pack</h4>
+                </div>
+                <div class="card-body text-center">
+                    <h2 class="card-title pricing-card-title mb-3">50 Tokens</h2>
+                    <h3 class="mb-3">₹25</h3>
+                    <button class="btn btn-primary w-100" data-tokens="50">Buy Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-success">
+                <div class="card-header bg-success text-white text-center">
+                    <h4>Pro Pack</h4>
+                    <span class="badge bg-warning text-dark">Most Popular</span>
+                </div>
+                <div class="card-body text-center">
+                    <h2 class="card-title pricing-card-title mb-3">200 Tokens</h2>
+                    <h3 class="mb-3">$16.99 <small class="text-muted"><del>$19.99</del></small></h3>
+                    <button class="btn btn-success w-100" data-tokens="200">Buy Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-warning">
+                <div class="card-header bg-warning text-white text-center">
+                    <h4>Ultimate Pack</h4>
+                    <span class="badge bg-danger">Best Value</span>
+                </div>
+                <div class="card-body text-center">
+                    <h2 class="card-title pricing-card-title mb-3">500 Tokens</h2>
+                    <h3 class="mb-3">$39.99 <small class="text-muted"><del>$49.99</del></small></h3>
+                    <button class="btn btn-warning w-100" data-tokens="500">Buy Now</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Token Purchase -->
+        <div class="col-12 mt-4">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Custom Token Purchase</h4>
+                    <div class="row align-items-center">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <button class="btn btn-outline-secondary" type="button" id="token-minus">-</button>
+                                <input type="number" 
+                                       class="form-control text-center" 
+                                       id="custom-token-input" 
+                                       value="100" 
+                                       min="10" 
+                                       max="1000">
+                                <button class="btn btn-outline-secondary" type="button" id="token-plus">+</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h5 id="total-price" class="mb-0">Price: $9.99</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-primary w-100" id="custom-token-buy">Buy Custom Tokens</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.token-purchase-page .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.token-purchase-page .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+#custom-token-input {
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+#custom-token-input::-webkit-inner-spin-button,
+#custom-token-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tokenInput = document.getElementById('custom-token-input');
+    const tokenMinus = document.getElementById('token-minus');
+    const tokenPlus = document.getElementById('token-plus');
+    const totalPriceEl = document.getElementById('total-price');
+    const customTokenBuy = document.getElementById('custom-token-buy');
+
+    // Predefined token purchase buttons
+    const buyButtons = document.querySelectorAll('[data-tokens]');
+    
+    // Price calculation function
+    function calculatePrice(tokens) {
+        // Pricing tiers
+        if (tokens <= 100) return (tokens * 0.10).toFixed(2);
+        if (tokens <= 250) return (tokens * 0.09).toFixed(2);
+        if (tokens <= 500) return (tokens * 0.08).toFixed(2);
+        return (tokens * 0.07).toFixed(2);
+    }
+
+    // Event listeners for plus and minus buttons
+    tokenMinus.addEventListener('click', () => {
+        let currentValue = parseInt(tokenInput.value);
+        if (currentValue > 10) {
+            tokenInput.value = currentValue - 10;
+            totalPriceEl.textContent = `Price: $${calculatePrice(tokenInput.value)}`;
+        }
+    });
+
+    tokenPlus.addEventListener('click', () => {
+        let currentValue = parseInt(tokenInput.value);
+        if (currentValue < 1000) {
+            tokenInput.value = currentValue + 10;
+            totalPriceEl.textContent = `Price: $${calculatePrice(tokenInput.value)}`;
+        }
+    });
+
+    // Input change event for direct input
+    tokenInput.addEventListener('input', () => {
+        let value = parseInt(tokenInput.value);
+        if (isNaN(value)) value = 10;
+        value = Math.min(Math.max(value, 10), 1000);
+        tokenInput.value = value;
+        totalPriceEl.textContent = `Price: $${calculatePrice(value)}`;
+    });
+
+    // Custom token purchase
+    customTokenBuy.addEventListener('click', () => {
+        const tokens = parseInt(tokenInput.value);
+        const price = calculatePrice(tokens);
+
+        fetch('/purchase-tokens/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({ tokens: tokens, price: price })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert(`Successfully purchased ${tokens} tokens for $${price}!`);
+            } else {
+                alert('Purchase failed. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred during purchase.');
+        });
+    });
+
+    // Predefined token purchases
+    buyButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const tokens = this.dataset.tokens;
+            const price = calculatePrice(tokens);
+            
+            fetch('/purchase-tokens/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ tokens: tokens, price: price })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert(`Successfully purchased ${tokens} tokens!`);
+                } else {
+                    alert('Purchase failed. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during purchase.');
+            });
+        });
+    });
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+</script>
+{% endblock %}
