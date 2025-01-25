@@ -22,11 +22,14 @@ def recipes(request):
         recipe_name = data.get('recipe_name')
         recipe_des = data.get('recipe_des')
         recipe_image = request.FILES.get('recipe_image')
+        recipe_main = data.get('recipe_main')
 
         Recipe.objects.create(
            recipe_des = recipe_des,
            recipe_image = recipe_image,
            recipe_name = recipe_name,
+           recipe_main = recipe_main,
+
        )
         
         return redirect('/recipes/')
@@ -49,10 +52,7 @@ def delete(request,id):
 def update(request, id):
     queryset = Recipe.objects.get(id=id)
     
-    # Check if the current user is the creator of the recipe
-    if request.user != queryset.user:
-        messages.error(request, "You are not authorized to modify this.")
-        return redirect('/recipes/')
+    
 
     if request.method == "POST":
        data = request.POST
@@ -117,7 +117,7 @@ def register_page(request):
 
         messages.info(request, 'Account Created Successfully')
 
-        return redirect("/register/")
+        return redirect("/login/")
 
     return render(request, 'register.html')
 
