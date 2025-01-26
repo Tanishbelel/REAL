@@ -118,13 +118,13 @@ body {
         <div class="flex items-center space-x-6">
             <ul class="flex space-x-6 text-white text-lg">
                 {% if request.user.is_authenticated %}
-                <li><a class="hover:text-purple-500 nav-link position-relative">10🪙</a></li>
+                <li><a class="hover:text-purple-500 nav-link position-relative" href="/buy-token/" >10🪙</a></li>
                 {% endif %}
                 <li><a class="hover:text-pink-500 nav-link position-relative" href="/">Home</a></li>
                 <li><a class="hover:text-purple-500 nav-link position-relative" href="/recipes/">Lists</a></li>
                 {% if request.user.is_authenticated %}
                 <li><a class="hover:text-indigo-500 nav-link position-relative" href="/favorites/">My Favorites</a></li>
-                <li><a class="hover:text-indigo-500 nav-link position-relative" onclick="showRandomNumber()">Refferal Code</a></li>
+                <li><a class="hover:text-indigo-500 nav-link position-relative" onclick="showRandomNumber()">Referral Code</a></li>
                 {% endif %}
             </ul>
 
