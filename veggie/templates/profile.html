@@ -9,15 +9,11 @@
         <div class="bg-white shadow-2xl rounded-2xl overflow-hidden">
             <div class="p-6 sm:p-12 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-10">
                 <div class="shrink-0">
-                    <img 
-                        src="{{ user.profile.avatar.url|default:'/media/default_avatar.png' }}" 
-                        class="w-48 h-48 rounded-full object-cover border-4 border-purple-200 transform transition hover:scale-110" 
-                        alt="{{ user.username }}'s avatar"
-                    >
+                    <img src="https://ui-avatars.com/api/?name={{ request.user.username }}&background=6a11cb&color=fff" alt="{{ request.user.username }}" class="rounded-full w-40 h-60">
                 </div>
                 <div class="text-center md:text-left w-full">
                     <h1 class="text-4xl font-extrabold text-gray-900 mb-4">{{ user.username }}</h1>
-                    <p class="text-lg text-gray-600 mb-6">{{ user.profile.bio|default:'Food enthusiast and recipe explorer' }}</p>
+                    
                     
                     <div class="flex flex-wrap justify-center md:justify-start items-center gap-4">
                         

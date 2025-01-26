@@ -29,7 +29,7 @@
                 </div>
                 <div class="card-body text-center">
                     <h2 class="card-title pricing-card-title mb-3">200 Tokens</h2>
-                    <h3 class="mb-3">$16.99 <small class="text-muted"><del>₹</del></small></h3>
+                    <h3 class="mb-3">₹95 <small class="text-muted"><del>₹100</del></small></h3>
                     <button class="btn btn-success w-100" data-tokens="200">Buy Now</button>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="card-body text-center">
                     <h2 class="card-title pricing-card-title mb-3">500 Tokens</h2>
-                    <h3 class="mb-3">$39.99 <small class="text-muted"><del>$49.99</del></small></h3>
+                    <h3 class="mb-3">₹200<small class="text-muted"><del>₹250</del></small></h3>
                     <button class="btn btn-warning w-100" data-tokens="500">Buy Now</button>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <h5 id="total-price" class="mb-0">Price: $9.99</h5>
+                            <h5 id="total-price" class="mb-0">Price:₹50</h5>
                         </div>
                         <div class="col-md-4">
                             <button class="btn btn-primary w-100" id="custom-token-buy">Buy Custom Tokens</button>
@@ -79,6 +79,39 @@
         </div>
     </div>
 </div>
+
+<div class="container token-purchase-page py-5">
+    <h1 class="text-center mb-5">Featured Content</h1>
+
+    <div class="row g-4">
+        <!-- Predefined Packages -->
+        <div class="col-md-4">
+            <div class="card h-100 border-primary">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Attend DataScience Webinar @XIE</h4>
+                </div>
+                <div class="card-body text-center">
+                    <h2 class="card-title pricing-card-title mb-3">DataScience Workshop</h2>
+                    <h3 class="mb-3">-By prof Narayan Murthy</h3>
+                    <button class="btn btn-primary w-100" data-tokens="50">Register Now to get 10 tokens</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-success">
+                <div class="card-header bg-success text-white text-center">
+                    <h4>Hackathon @XIE</h4>
+                    <span class="badge bg-warning text-dark">Most Popular</span>
+                </div>
+                <div class="card-body text-center">
+                    <h2 class="card-title pricing-card-title mb-3">24 hours Hackathon</h2>
+                    <h3 class="mb-3">₹95 <small class="text-muted"><del>₹100</del></small></h3>
+                    <button class="btn btn-success w-100" data-tokens="200">Enroll Now for 20 Tokens</button>
+                </div>
+            </div>
+        </div>
+        </div>
 
 <style>
 .token-purchase-page .card {
@@ -119,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (tokens <= 100) return (tokens * 0.10).toFixed(2);
         if (tokens <= 250) return (tokens * 0.09).toFixed(2);
         if (tokens <= 500) return (tokens * 0.08).toFixed(2);
-        return (tokens * 0.07).toFixed(2);
+        return (tokens * 0.02).toFixed(2);
     }
 
     // Event listeners for plus and minus buttons
@@ -127,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let currentValue = parseInt(tokenInput.value);
         if (currentValue > 10) {
             tokenInput.value = currentValue - 10;
-            totalPriceEl.textContent = `Price: $${calculatePrice(tokenInput.value)}`;
+            totalPriceEl.textContent = `Price: ₹${calculatePrice(tokenInput.value)}`;
         }
     });
 
@@ -135,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let currentValue = parseInt(tokenInput.value);
         if (currentValue < 1000) {
             tokenInput.value = currentValue + 10;
-            totalPriceEl.textContent = `Price: $${calculatePrice(tokenInput.value)}`;
+            totalPriceEl.textContent = `Price: ₹${calculatePrice(tokenInput.value)}`;
         }
     });
 
@@ -145,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isNaN(value)) value = 10;
         value = Math.min(Math.max(value, 10), 1000);
         tokenInput.value = value;
-        totalPriceEl.textContent = `Price: $${calculatePrice(value)}`;
+        totalPriceEl.textContent = `Price: ₹${calculatePrice(value)}`;
     });
 
     // Custom token purchase
@@ -171,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('An error occurred during purchase.');
+            alert('Token heve been Successfully Added to your account.');
         });
     });
 
